@@ -109,6 +109,8 @@ def run():
                     c = c + 1
                 if c >= _COLUMNS:
                     break
+                else:
+                    c = 0
             
     clear_the_terminal()
     print("GAME END")

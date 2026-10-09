@@ -6,49 +6,48 @@ from textual.containers import HorizontalGroup, VerticalScroll
 from textual.reactive import reactive
 from textual.widgets import Button, Digits, Footer, Header
 
+
 class TimeDisplay(Digits):
-    """a widget to display elapsed time"""
+    """widget to display elapsed time"""
     start_time = reactive(monotonic)
     time = reactive(0.0)
     total = reactive(0.0)
 
     def on_mount(self) -> None:
-        """Event handler called when widget is added to the app."""
-        self.set_interval(1 / 60, self.update_time)
+        """event handler called when widget is added to the app"""
         self.update_timer = self.set_interval(1 / 60, self.update_time, pause=True)
 
     def update_time(self) -> None:
-        """Method to update the time to the current time."""
-        self.time = monotonic() - self.start_time
+        """update time to current"""
         self.time = self.total + (monotonic() - self.start_time)
 
     def watch_time(self, time: float) -> None:
-        """Called when the time attribute changes."""
+        """called when the time attribute changes"""
         minutes, seconds = divmod(time, 60)
         hours, minutes = divmod(minutes, 60)
         self.update(f"{hours:02,.0f}:{minutes:02.0f}:{seconds:05.2f}")
-        
+
     def start(self) -> None:
-        """Method to start (or resume) time updating."""
+        """start (or resume) time updating"""
         self.start_time = monotonic()
         self.update_timer.resume()
 
-    def stop(self) -> None:
-        """Method to stop the time display updating."""
+    def stop(self):
+        """stop the time display updating"""
         self.update_timer.pause()
         self.total += monotonic() - self.start_time
         self.time = self.total
 
-    def reset(self) -> None:
-        """Method to reset the time display to zero."""
+    def reset(self):
+        """reset the time display to zero"""
         self.total = 0
         self.time = 0
-    
+
 class Stopwatch(HorizontalGroup):
-    """a stopwatch widget"""
-    
+    """stopwatch widget"""
+
     def on_button_pressed(self, event: Button.Pressed) -> None:
-        """Event handler called when a button is pressed."""
+        """event handler called when a button is pressed"""
         button_id = event.button.id
         time_display = self.query_one(TimeDisplay)
         if button_id == "start":
@@ -59,32 +58,38 @@ class Stopwatch(HorizontalGroup):
             self.remove_class("started")
         elif button_id == "reset":
             time_display.reset()
-    
-    def on_button_pressed(self, event: Button.Pressed) -> None:
-        """Event handler called when a button is pressed."""
-        if event.button.id == "start":
-            self.add_class("started")
-        elif event.button.id == "stop":
-            self.remove_class("started")
-    
+
     def compose(self) -> ComposeResult:
-        """create child widgets of stopwatch"""
+        """create child widgets of a stopwatch"""
         yield Button("Start", id="start", variant="success")
         yield Button("Stop", id="stop", variant="error")
         yield Button("Reset", id="reset")
-        yield TimeDisplay("00:00:00.00")
         yield TimeDisplay()
 
+
 class StopwatchApp(App):
-    """a textual app to manage stopwatch"""
+    """textual app to manage stopwatches"""
+
     CSS_PATH = "stopWatchCSS.tcss"
-    BINDINGS = [("d", "toggle_dark", "Toggle dark mode")]
+    BINDINGS = [ ("d", "toggle_dark", "Toggle dark mode"), ("a", "add_stopwatch", "Add"), ("r", "remove_stopwatch", "Remove"), ]
 
     def compose(self) -> ComposeResult:
-        """create child widgets for the app"""
+        """add widgets to the app"""
         yield Header()
         yield Footer()
-        yield VerticalScroll(Stopwatch(), Stopwatch(), Stopwatch())
+        yield VerticalScroll(Stopwatch(), Stopwatch(), Stopwatch(), id="timers")
+
+    def action_add_stopwatch(self) -> None:
+        """add a timer"""
+        new_stopwatch = Stopwatch()
+        self.query_one("#timers").mount(new_stopwatch)
+        new_stopwatch.scroll_visible()
+
+    def action_remove_stopwatch(self) -> None:
+        """remove a timer"""
+        timers = self.query("Stopwatch")
+        if timers:
+            timers.last().remove()
 
     def action_toggle_dark(self) -> None:
         """toggle dark mode"""

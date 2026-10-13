@@ -46,12 +46,11 @@ def show_dropping_block(grid, column_number):
     """Given a grid and a column to drop into, simulate a visual drop of a box."""
     if check_space(grid, column_number):
         for row in range(_ROWS):
+            
             if keypresstest.key_pressed == "Key.left" and column_number > 0 and grid[column_number - 1][row] != "\u2588\u2588":
                 column_number -= 1
-                #print("Left")
             if keypresstest.key_pressed == "Key.right"and column_number < _COLUMNS - 1 and grid[column_number + 1][row] != "\u2588\u2588":
                 column_number += 1
-                #print("Right")
                 
             keypresstest.key_pressed = ""
             grid[column_number][row] = _BLOCK
@@ -72,23 +71,6 @@ def show_dropping_block(grid, column_number):
         drop_block(grid, column_number)
 
     return column_number
-
-#    for row in range(_ROWS):
-#        grid[column_number][row] = _BLOCK
-#        display_grid(grid)
-#        time.sleep(_INTERVAL)
-#        clear_the_terminal()
-#        
-#        grid[column_number][row] = _BLANK
-#        
-#        if row + 1 < _ROWS:
-#            if grid[column_number][row + 1] == _BLOCK: break
-#        
-#        grid[column_number][row] = _BLANK
-#        display_grid(grid)
-#        #time.sleep(_INTERVAL)
-#        clear_the_terminal()
-#    drop_block(grid, column_number)
     
 def check_space(grid, column_number):
     if grid[column_number][0] != "\u2588\u2588":

@@ -1,0 +1,35 @@
+#red {
+	width: 5;
+	height: 5;
+    color: red;
+}
+
+#blue {
+	width: 5;
+	height: 5;
+    color: blue;
+}
+
+#yellow {
+	width: 5;
+	height: 5;
+    color: yellow;
+}
+
+#green {
+	width: 5;
+	height: 5;
+    color: green;
+}
+
+#black {
+	width: 5;
+	height: 5;
+    color: black;
+}
+
+#orange {
+	width: 5;
+	height: 5;
+    color: orange;
+}

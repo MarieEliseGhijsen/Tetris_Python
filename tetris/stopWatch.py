@@ -6,7 +6,6 @@ from textual.containers import HorizontalGroup, VerticalScroll
 from textual.reactive import reactive
 from textual.widgets import Button, Digits, Footer, Header
 
-
 class TimeDisplay(Digits):
     """widget to display elapsed time"""
     start_time = reactive(monotonic)

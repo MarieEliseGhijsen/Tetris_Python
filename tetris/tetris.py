@@ -44,5 +44,41 @@ def check_space(grid, column_number):
     return False
     
 def run(): 
+    CSS_PATH = "tetrisCSS.tcss"
+    
     get_grid_size()
     grid = build_clean_grid()
+    #make timer
+    #start timer
+    
+    for row in range(0, 70):
+        r = random.randint(0, _COLUMNS - 1)
+        if check_space(g, r):
+            #set block colour
+            c = random.randint(1, 6)
+            if c == 1:
+                #set id to red
+            else if c == 2:
+                #set id to blue
+            else if c == 3:
+                #set id to yellow
+            else if c == 4:
+                #set id to green
+            else if c == 5:
+                #set id to black
+            else if c == 6:
+                #set id to orange
+                
+            #drop block
+            
+            #update time
+            
+            #check if row full
+        else:
+            #cant place anymore blocks - game ends
+            break
+          
+    clear_the_terminal()
+    #calc score - PUT REASONING IN README
+    #display score
+    print("GAME END")

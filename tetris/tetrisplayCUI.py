@@ -29,6 +29,8 @@ def drop_block(grid, column_number):
     except:
         n = -1
     grid[column_number][n] = _BLOCK
+    cleared_rows = clear_full_rows(grid)
+    
     return grid
 
 def display_grid(grid):
@@ -76,6 +78,22 @@ def check_space(grid, column_number):
     if grid[column_number][0] != "\u2588\u2588":
         return True
     return False
+    
+def clear_full_rows(grid):
+    '''removes all full rows and moves remaining rows down'''
+    cleared_rows = 0
+    
+    for row in range(_ROWS):
+        if all(grid[column][row] == _BLOCK): #error on this line on column (doesnt work even if replaced with _COLUMNS) - if this line commented out entirely just clears every block once placed
+            for column in range(_COLUMNS):
+                for r in range(row, 0, -1):
+                    grid[column][r] = grid[column][r - 11]
+            for column in range(_COLUMNS):
+                grid[column][0] = _BLANK
+                
+            cleared_rows = cleared_rows + 1
+            
+    return cleared_rows
     
 def run():
     g = build_clean_grid()

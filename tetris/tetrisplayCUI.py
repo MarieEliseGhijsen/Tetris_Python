@@ -82,17 +82,18 @@ def check_space(grid, column_number):
 def clear_full_rows(grid):
     '''removes all full rows and moves remaining rows down'''
     cleared_rows = 0
-    
-    for row in range(_ROWS):
-        if all(grid[column][row] == _BLOCK): #error on this line on column (doesnt work even if replaced with _COLUMNS) - if this line commented out entirely just clears every block once placed
+    row = _ROWS - 1
+
+    while row >= 0:
+        if all(grid[column][row] == _BLOCK for column in range(_COLUMNS)):
             for column in range(_COLUMNS):
                 for r in range(row, 0, -1):
-                    grid[column][r] = grid[column][r - 11]
-            for column in range(_COLUMNS):
+                    grid[column][r] = grid[column][r - 1]
                 grid[column][0] = _BLANK
-                
-            cleared_rows = cleared_rows + 1
-            
+            cleared_rows += 1
+        else:
+            row -= 1
+
     return cleared_rows
     
 def run():

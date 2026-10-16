@@ -20,7 +20,7 @@ MAX_SIZE = 10
 BLOCK = "\u2588\u2588"
 BLANK = "  "
 
-COLOURS = [ "red", "blue", "yellow", "green", "black", "orange", ]
+COLOURS = [ "dark_red", "slate_blue3", "yellow3", "dark_olive_green3", "black", "orange1", ]
 
 RESULTS_FILE = "scores.csv"
 
@@ -174,6 +174,8 @@ def start_game(app):
 
     app.query_one("#setup").display = False
     app.query_one("#game").display = True
+    
+    app.set_focus(None) #was having problems moving blocks right and left AI told me to add this line now it works
 
     app.game_timer.resume()
     app.clock_timer.resume()
@@ -335,6 +337,8 @@ class TetrisApp(App):
         if column >= 0 and check_space(game["grid"], row, column):
             game["active_column"] = column
             refresh_board(self)
+            
+        #print("left")
 
     def action_move_right(self) -> None:
         """move the falling block one column to the right"""
@@ -347,6 +351,8 @@ class TetrisApp(App):
         if (column < game["columns"] and check_space(game["grid"], row, column)):
             game["active_column"] = column
             refresh_board(self)
+            
+        #print("right")
 
     def action_quit_game(self) -> None:
         if game.get("started"):

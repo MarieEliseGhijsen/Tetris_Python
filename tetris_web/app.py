@@ -17,7 +17,6 @@ def show_the_form():
     return render_template(
         "form.html",
         the_title="Player Join",
-        name=session.get("remembered_name", ""),
     )
     
 #######################################################################
@@ -25,11 +24,14 @@ def show_the_form():
 #when game over record name, time played and score (calculate)
 @app.get("/gameOver")
 def display_game_over():
+    session["name"] = request.form["the_name"]
+    session["rows"] = request.form["the_rows"]
+    session["columns"] = request.form["the_columns"]
     return render_template(
         "gameOver.html",
         the_title="Game Over",
-        name=request.form["the_name"],
-        score=(10*100+10*2+int(request.form["the_rows"])*int(request.form["the_columns"])*5), #blocks * 100 + time * 2 + rows * columns * 5
+        name=session["name"],
+        score=(10*100+10*2+int(session["rows"])*int(session["columns"])*5), #blocks * 100 + time * 2 + rows * columns * 5
     )
     
 #######################################################################

@@ -24,12 +24,12 @@ def show_the_form():
 
 #when game over record name, time played and score (calculate)
 @app.get("/gameOver")
-def show_the_form():
+def display_game_over():
     return render_template(
         "gameOver.html",
         the_title="Game Over",
         name=request.form["the_name"],
-        score=(10*100+10*2+request.form["the_rows"]*request.form["the_columns"]*5), #blocks * 100 + time * 2 + rows * columns * 5
+        score=(10*100+10*2+int(request.form["the_rows"])*int(request.form["the_columns"])*5), #blocks * 100 + time * 2 + rows * columns * 5
     )
     
 #######################################################################
@@ -37,7 +37,9 @@ def show_the_form():
 @app.get("/showgrid")
 def display_the_grid():
     session["count"] = 0
-    return render_template( "grid.html", the_title="showgrid", rowcount=request.form["the_rows"], colcount=request.form["the_columns"], colour="white", )
+    session["rows"] = request.form["the_rows"]
+    session["columns"] = request.form["the_columns"]
+    return render_template( "grid.html", the_title="showgrid", rowcount=session["rows"], colcount=session["columns"], colour="white", )
 
 @app.post("/location/<row>/<col>/<colour>")
 def process_the_click(row, col, colour):

@@ -1,11 +1,11 @@
 
 {% extends "base.html" %}
 
-{% block the_body %}
+{% block mainbody %}
 
 <h1>Game Over {{ name }} you achieved a Score of {{ score }}!</h1>
 
-<form method="POST" action="/join">
+<form method="GET" action="/join">
 
     <input type="submit" value="ReStart">
 

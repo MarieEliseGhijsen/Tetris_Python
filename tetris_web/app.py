@@ -11,40 +11,24 @@ COLOURS = [ "red", "blue", "yellow", "green", "black", "orange", ]
 #######################################################################
 #user chooses row, columns and name
 @app.get("/")
-@app.get("/data")
+@app.get("/join")
 def show_the_form():
     return render_template(
-        "process.html",
+        "form.html",
         the_title="Player Join",
         name=session.get("remembered_name", ""),
-    )
-
-@app.post("/process")
-def process_the_form():
-    session["remembered_name"] = request.form["the_name"]
-    with open("secrets.txt", "a") as fh:
-        print(
-            f'{request.form["the_name"]},{request.form["the_age"]},{request.form["the_password"]}',
-            file=fh
-        )
-    return render_template(
-        "data.html",
-        the_title="Ah ha!",
-        name=request.form["the_name"],
-        age=request.form["the_age"],
-        password=request.form["the_password"],
     )
 #######################################################################
 
 @app.get("/showgrid")
 def display_the_grid():
     session["count"] = 0
-    return render_template( "grid.html", rowcount=8, colcount=4, colour="white", )
+    return render_template( "grid.html", the_title="showgrid", rowcount=request.form["the_rows"], colcount=request.form["the_columns"], colour="white", )
 
 @app.post("/location/<row>/<col>/<colour>")
 def process_the_click(row, col, colour):
     set_colour = "white" if colour != "white" else random.choice(COLOURS)
-    return render_template( "snippet.html", row=row, col=col, colour=set_colour, )
+    return render_template( "snippet.html", the_title="location", row=row, col=col, colour=set_colour, )
 
 @app.post("/counting")
 def maintain_count():

@@ -1,0 +1,18 @@
+
+{% extends "base.html" %}
+
+{% block mainbody %}
+
+<h1>Player Join</h1>
+
+<form method="POST" action="/showgrid">
+
+    Name : <input type="text" name="the_name"><br />
+    Rows : <input type="text" name="the_rows"><br />
+    Columns : <input type="text" name="the_columns"><br />
+
+    <input type="submit" value="Start">
+
+</form>
+
+{% endblock %}

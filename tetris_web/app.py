@@ -9,6 +9,7 @@ app.secret_key = "fhdsjhgkjsadghhgdshdgdsngjdsfnvjdf njdfnvngdfkgjndfgj"
 COLOURS = [ "red", "blue", "yellow", "green", "black", "orange", ]
 
 #######################################################################
+
 #user chooses row, columns and name
 @app.get("/")
 @app.get("/join")
@@ -18,6 +19,19 @@ def show_the_form():
         the_title="Player Join",
         name=session.get("remembered_name", ""),
     )
+    
+#######################################################################
+
+#when game over record name, time played and score (calculate)
+@app.get("/gameOver")
+def show_the_form():
+    return render_template(
+        "gameOver.html",
+        the_title="Game Over",
+        name=request.form["the_name"],
+        score=(10*100+10*2+request.form["the_rows"]*request.form["the_columns"]*5), #blocks * 100 + time * 2 + rows * columns * 5
+    )
+    
 #######################################################################
 
 @app.get("/showgrid")
@@ -48,4 +62,3 @@ if __name__ == "__main__":
 #block moves left and right
 #block stays on bottom of board once dropped
 #when row filled it clears
-#when game over record name, time played and score (calculate)

@@ -1,0 +1,20 @@
+
+{% extends "base.html" %}
+
+{% block the_body %}        
+<h1>Give me your data!</h1>
+
+<p>Hello {{ name }}</p>
+
+
+<form method="POST" action="/process">
+
+    Name: <input type="text" name="the_name"><br />
+    Age: <input type="text" name="the_age"><br />
+    Password: <input type="password" name="the_password"><br />
+
+    <input type="submit" value="Do it!">
+
+</form>
+
+{% endblock %}

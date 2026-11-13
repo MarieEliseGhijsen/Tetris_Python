@@ -1,39 +1,132 @@
 
-div {
-    font-size: 24px;
+/*used an AI to help make pretty*/
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #202020;
+    color: white;
 }
 
-div.whitebox {
-    color: black;
+h1 {
+    margin-top: 25px;
+}
+
+.setup {
+    width: 350px;
+    margin: 50px auto;
+    padding: 25px;
+    border: 2px solid white;
+    border-radius: 10px;
+}
+
+.setup label {
+    display: block;
+    margin-top: 15px;
+}
+
+.setup input {
+    width: 90%;
+    padding: 8px;
+    margin-top: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 8px;
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.error {
+    color: red;
+}
+
+.timer {
+    margin: 20px;
+    font-size: 20px;
+}
+
+.game-board {
+    margin: 20px auto;
+    border-collapse: collapse;
+    border: 3px solid white;
     background-color: white;
 }
 
-div.redbox {
+.game-board td {
+    padding: 0;
+    border: 1px solid #888;
+}
+
+.block {
+    width: 35px;
+    height: 35px;
+}
+
+.emptybox {
+    background-color: white;
+}
+
+.whitebox {
     color: white;
+    background-color: white;
+}
+
+.redbox {
+    color: red;
     background-color: red;
 }
 
-div.bluebox {
-    color: white;
+.bluebox {
+    color: blue;
     background-color: blue;
 }
 
-div.yellowbox {
-    color: white;
+.yellowbox {
+    color: yellow;
     background-color: yellow;
 }
 
-div.greenbox {
-    color: white;
+.greenbox {
+    color: green;
     background-color: green;
 }
 
-div.blackbox {
-    color: white;
+.blackbox {
+    color: black;
     background-color: black;
 }
 
-div.orangebox {
-    color: white;
+.orangebox {
+    color: orange;
     background-color: orange;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.status {
+    margin: 15px;
+}
+
+.end-button {
+    background-color: darkred;
+    color: white;
+}
+
+.game-over {
+    margin: 25px;
+    padding: 20px;
+    border: 2px solid white;
+    border-radius: 10px;
+    display: inline-block;
 }

@@ -3,16 +3,18 @@
 
 {% block mainbody %}
 
-<h1>Player Join</h1>
+<div class="setup">
+    <h1>Player Join</h1>
 
-<form method="POST" action="/showgrid">
+    <form method="POST" action="/start">
 
-    Name : <input type="text" name="the_name"><br />
-    Rows : <input type="text" name="the_rows"><br />
-    Columns : <input type="text" name="the_columns"><br />
+        Name : <input type="text" name="the_name"><br />
+        Rows (3-10) : <input type="text" name="the_rows" min="3" max="10"><br />
+        Columns (3-10) : <input type="text" name="the_columns" min="3" max="10"><br />
 
-    <input type="submit" value="Start">
+        <button type="submit">Start Game</button>
 
-</form>
+    </form>
+</div>
 
 {% endblock %}

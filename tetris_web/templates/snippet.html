@@ -1,9 +1,112 @@
 
-<div 
-    id="{{col}}, {{row}}"
-    class="{{colour}}box"
-    hx-post="/location/{{row}}/{{col}}/{{colour}}"
-    hx-target="this"
-    hx-swap="outerHTML">
-    {{col}}, {{row}}
+<div id="game-panel"
+
+    {% if game.started and not game.paused and not game.over %}
+        hx-get="/tick"
+        hx-trigger="every 300ms"
+        hx-swap="outerHTML"
+    {% endif %}>
+
+    <div class="timer">
+        {% if game.over %}
+            Final time: {{ "%.1f"|format(game.elapsed) }} seconds
+        {% else %}
+            {% set total_seconds = game.elapsed|int %}
+            {% set minutes = total_seconds // 60 %}
+            {% set seconds = total_seconds % 60 %}
+
+            Time: {{ "%02d:%02d"|format(minutes, seconds) }}
+            | Blocks: {{ game.blocks }}
+            | Grid: {{ game.columns }} x {{ game.rows }}
+        {% endif %}
+    </div>
+
+    <table class="game-board">
+        {% for row in range(game.rows) %}
+        
+            <tr>
+                {% for col in range(game.columns) %}
+
+                    {% set colour = game.grid[row][col] %}
+
+                    {% if row == game.active_row
+                          and col == game.active_column
+                          and game.active_colour %}
+                        {% set colour = game.active_colour %}
+                    {% endif %}
+
+                    <td>
+                        {% if colour is none %}
+                            <div class="block emptybox"></div>
+                        {% else %}
+                            <div class="block {{ colour }}box"></div>
+                        {% endif %}
+                    </td>
+
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+
+
+    {% if game.over %}
+        {% include "gameOver.html" %}
+    {% else %}
+
+        <p class="status">
+            {% if game.paused %}
+                Game paused.
+            {% else %}
+                Use the LEFT and RIGHT arrow keys to move the blocks.
+            {% endif %}
+        </p>
+
+
+        {% if not game.paused %} <!-- movement keys controls -->
+            <!-- left arrow key -->
+            <div style="display: none;"
+                 hx-post="/move/left"
+                 hx-trigger="keyup[key=='ArrowLeft'] from:body"
+                 hx-target="#game-panel"
+                 hx-swap="outerHTML">
+            </div>
+
+            <!-- right arrow key -->
+            <div style="display: none;"
+                 hx-post="/move/right"
+                 hx-trigger="keyup[key=='ArrowRight'] from:body"
+                 hx-target="#game-panel"
+                 hx-swap="outerHTML">
+            </div>
+        {% endif %}
+
+        <div class="controls">
+            {% if game.paused %}
+                <form hx-post="/resume"
+                      hx-target="#game-panel"
+                      hx-swap="outerHTML">
+
+                    <button type="submit">Resume</button>
+                </form>
+            {% else %}
+
+                <form hx-post="/pause"
+                      hx-target="#game-panel"
+                      hx-swap="outerHTML">
+
+                    <button type="submit">Pause</button>
+                </form>
+            {% endif %}
+
+            <form hx-post="/end"
+                  hx-target="#game-panel"
+                  hx-swap="outerHTML">
+
+                <button type="submit" class="end-button">
+                    End Game
+                </button>
+            </form>
+
+        </div>
+    {% endif %}
 </div>

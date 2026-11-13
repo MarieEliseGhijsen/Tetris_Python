@@ -4,12 +4,16 @@
 <html>
     <head>
         <title>{{ the_title }}</title>
+
+        <!-- load HTMX - lets HTML send requests to Flask -->
         <script src="https://cdn.jsdelivr.net/npm/htmx.org@4.0.1" 
         integrity="sha384-Qp9rdC8H7EqOoX+nR0P3RPG2Noji+qdwJlGpfzwQJsfOpp3sGwIdSP9xO3+UlEhn" 
         crossorigin="anonymous"></script>
+
         <link rel="stylesheet" href="/static/grid.css">
     </head>
     <body>
+        <!-- other templates insert their page content into this -->
         {% block mainbody %}
         {% endblock %}
     </body>

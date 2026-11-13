@@ -1,14 +1,13 @@
 
-{% extends "base.html" %}
+<div class="game-over">
+    <h2>GAME OVER!</h2>
+    <h3>{{ game.name }}</h3>
 
-{% block mainbody %}
-
-<h1>Game Over {{ name }} you achieved a Score of {{ score }}!</h1>
-
-<form method="GET" action="/join">
-
-    <input type="submit" value="ReStart">
-
-</form>
-
-{% endblock %}
+    <p>Score: {{ game.score }}</p>
+    <p>Blocks: {{ game.blocks }}</p>
+    <p>Time: {{ "%.1f"|format(game.elapsed) }} seconds</p>
+    
+    <form method="GET" action="/join">
+        <button type="submit">Restart Game</button>
+    </form>
+</div>
